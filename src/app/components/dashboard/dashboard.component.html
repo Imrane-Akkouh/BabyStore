@@ -1,0 +1,14 @@
+<div class="container">
+    <div class="row">
+        <div *ngFor="let product of products | async" class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+            <img class="card-img-top" [src]="product.imgUrl" alt="Card image">
+            <div class="card-body justify-content-center">
+                <h4 class="card-title">{{product.name}}</h4>
+                <p class="card-text">{{product.description}}</p>
+                <a (click)="buyProduct()" class="btn btn-outline-primary" *ngIf="!isAdmin">buy</a>
+                <a [routerLink]="['/edit',product.name]" class="btn btn-warning" *ngIf="isAdmin">edit</a>
+                <a (click)="deleteProduct()" class="btn btn-danger" *ngIf="isAdmin">delete</a>
+            </div>
+        </div>
+    </div>
+</div>

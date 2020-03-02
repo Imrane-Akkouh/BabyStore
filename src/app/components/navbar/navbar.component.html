@@ -1,0 +1,39 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <a class="navbar-brand" href="#"><strong>Baby Store</strong></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link mr-2 ml-2" routerLink="/">Dashboard</a>
+            </li>
+            <li class="nav-item mr-2 ml-2" *ngIf="isAdmin">
+                <a class="nav-link" routerLink="/edit">Edit Product</a>
+            </li>
+            <ng-template [ngIf]="!isAllowed()">
+                <li class="nav-item">
+                    <button 
+                    class="btn btn-outline-primary mr-2 ml-2 mb-2" routerLink="/signin">
+                    SignIn
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button 
+                        class="btn btn-outline-success mr-2 ml-2" routerLink="/signup">
+                        SignUp
+                    </button>
+                </li>    
+            </ng-template>
+            <ng-template [ngIf]="isAllowed()">
+                <li class="nav-item" >
+                    <button 
+                        class="btn btn-outline-warning mr-2 ml-2" (click)="logout()">
+                        Logout
+                    </button>
+                </li>
+            </ng-template>    
+    </ul>
+    </div>
+</nav>
