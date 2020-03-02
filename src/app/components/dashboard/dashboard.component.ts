@@ -21,7 +21,6 @@ export class DashboardComponent implements OnInit {
     this.products = this.productsCol.snapshotChanges().pipe(map(actions => {       
       return actions.map(a => {
         const data = a.payload.doc.data() as Product;
-        data.id = a.payload.doc.id;
         return data;
       });
     }))
@@ -31,7 +30,7 @@ export class DashboardComponent implements OnInit {
   }
 
   buyProduct(){
-    
+
   }
 
 }
