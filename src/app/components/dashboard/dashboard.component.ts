@@ -3,6 +3,9 @@ import { Observable } from 'rxjs';
 import { Product } from 'src/app/models/product.model';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { map } from 'rxjs/operators';
+import * as firebase from 'firebase';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,7 +17,7 @@ export class DashboardComponent implements OnInit {
   isAdmin = false;
   productsCol: AngularFirestoreCollection<Product>;
   products: Observable<Product[]>;
-  constructor(private afs: AngularFirestore) { }
+  constructor(private afs: AngularFirestore,private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
     this.productsCol = this.afs.collection('products');
@@ -30,7 +33,11 @@ export class DashboardComponent implements OnInit {
   }
 
   buyProduct(){
-
+    if(!this.authService.isAuthenticated()){
+      this.router.navigate(['/signin']);
+    }else{
+      
+    }
   }
 
 }
