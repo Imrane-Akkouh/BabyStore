@@ -12,9 +12,24 @@
 }
 
 .btn{
-    width: 50%;
+    width: 40%;
 }
 
 .btn-outline-primary{
     width: 100%;
+}
+
+.btn-outline-secondary{
+    width: 100%;
+}
+
+p.card-text{
+    max-height: 72px;
+    overflow: hidden;
+}
+
+.adminButtons{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }

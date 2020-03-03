@@ -5,6 +5,7 @@ import { EditProductComponent } from './components/edit-product/edit-product.com
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { AddProductComponent } from './components/add-product/add-product.component';
+import { AuthGuardService } from './guards/auth-guard.service';
 
 
 const routes: Routes = [{
@@ -14,9 +15,9 @@ const routes: Routes = [{
 },{
   path:"signup", component:SignUpComponent
 },{
-  path:"edit", component:EditProductComponent
+  path:"edit", component:EditProductComponent, canActivate: [AuthGuardService]
 },{
-  path:"add", component:AddProductComponent
+  path:"add", component:AddProductComponent, canActivate: [AuthGuardService]
 },{
   path:"**", component:DashboardComponent
 }

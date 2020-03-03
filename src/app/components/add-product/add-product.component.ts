@@ -16,9 +16,9 @@ export class AddProductComponent implements OnInit {
   }
 
   onCreate(form: NgForm){
-    let prodRef = this.afs.collection('products').doc()
-    console.log(prodRef.ref+"");
-    prodRef.set(Object.assign({},new Product(form.value.name, form.value.description, form.value.imgUrl,prodRef.ref+"")));
+    let id = this.afs.createId();
+    this.afs.collection('products').doc(id)
+    .set(Object.assign({},new Product(form.value.name, form.value.description, form.value.imgUrl,id)));
     form.resetForm();
   }
 

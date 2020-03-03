@@ -1,5 +1,5 @@
 import { Injectable, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import * as firebase from 'firebase';
 import { Product } from '../models/product.model';
 
 @Injectable({
@@ -9,15 +9,15 @@ export class ProductService implements OnInit {
 
   
 
-  constructor() {
+  constructor() { }
 
+  ngOnInit(){ }
+
+  editProduct(prod: Product){
+    return firebase.firestore().collection('products').doc(prod.id).update(prod)
   }
 
-  ngOnInit(){
-    
-  }
-
-  createProduct(name: string, description: string, imgUrl: string){
-
+  deleteProduct(id: string){
+    firebase.firestore().collection('products').doc(id).delete();
   }
 }

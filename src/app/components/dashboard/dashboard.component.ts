@@ -6,6 +6,8 @@ import { map } from 'rxjs/operators';
 import * as firebase from 'firebase';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { UserService } from 'src/app/services/user.service';
+import { ProductService } from 'src/app/services/product.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,11 +15,15 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  isUser = false;
-  isAdmin = false;
   productsCol: AngularFirestoreCollection<Product>;
   products: Observable<Product[]>;
-  constructor(private afs: AngularFirestore,private authService: AuthService, private router: Router) { }
+  constructor(
+    private afs: AngularFirestore,
+    private authService: AuthService,
+    private userService: UserService,
+    private ProductService: ProductService,
+    private router: Router 
+    ) { }
 
   ngOnInit(): void {
     this.productsCol = this.afs.collection('products');
@@ -29,14 +35,35 @@ export class DashboardComponent implements OnInit {
     }))
   }
 
-  deleteProduct(){
+  deleteProduct(id: string){
+    this.ProductService.deleteProduct(id);
   }
 
-  buyProduct(){
+  buyProduct(id: string){
     if(!this.authService.isAuthenticated()){
       this.router.navigate(['/signin']);
     }else{
-      
+      this.userService.buyProduct(id);
+    }
+  }
+
+  returnProduct(id: string){
+    this.userService.returnProduct(id)
+  }
+
+  isUser(){
+    return (this.authService.isAuthenticated() && this.authService.isUser());
+  }
+
+  isAdmin(){
+    return (this.authService.isAuthenticated() && this.authService.isAdmin());
+  }
+
+  isBought(prodId: string){
+    if(this.authService.isAuthenticated()){
+      return this.authService.getCurrentUser().products.includes(prodId);
+    }else{
+      return false;
     }
   }
 
